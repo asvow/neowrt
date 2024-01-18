@@ -73,7 +73,6 @@ jobs:
       run: |
         df -hT $PWD
         git clone $REPO_URL -b $BRANCH openwrt
-        cd openwrt
         
     - name: Update & Install Feeds
       id: update

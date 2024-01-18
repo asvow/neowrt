@@ -1,6 +1,6 @@
 # Remove duplicate packages
 pushd feeds/luci/applications
-rm -rf luci-app-adguardhome luci-app-diskman luci-app-dockerman luci-app-mosdns luci-app-openclash || true       
+rm -rf luci-app-adguardhome luci-app-diskman luci-app-dockerman luci-app-mosdns luci-app-openclash luci-app-zerotier || true       
 popd
 pushd feeds/luci/collections
 rm -rf luci-lib-docker || true       
@@ -11,22 +11,14 @@ popd
 cd package
 
 
-# Add luci-app-adguardhome
-git clone https://github.com/asvow/luci-app-adguardhome
+# Add neo-addon
+# Include luci-app-adguardhome & luci-app-dockerman & luci-app-zerotier
+git clone https://github.com/asvow/neo-addon
 
 # Add luci-app-diskman
 mkdir luci-app-diskman parted
 wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/applications/luci-app-diskman/Makefile -O luci-app-diskman/Makefile
 wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/Parted.Makefile -O parted/Makefile
-
-# Add luci-app-dockerman
-git clone --depth 1 --filter=blob:none --sparse https://github.com/lisaac/luci-app-dockerman extra
-pushd extra
-git sparse-checkout init --cone
-git sparse-checkout set applications/luci-app-dockerman
-mv */* ../
-popd
-rm -rf extra
 
 # Add luci-lib-docker
 git clone --depth 1 --filter=blob:none --sparse https://github.com/lisaac/luci-lib-docker extra
