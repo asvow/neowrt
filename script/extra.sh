@@ -1,3 +1,17 @@
+# Function to clone a repository and extract a specific directory
+clone_and_extract() {
+  repo_url=$1
+  target_path=$2
+  target_dir=../$(basename $target_path)
+  git clone --depth 1 --filter=blob:none --sparse $repo_url temp
+  pushd temp
+  git sparse-checkout init --cone
+  git sparse-checkout set $target_path
+  mkdir -p $target_dir && mv -v $target_path/* $target_dir
+  popd
+  rm -rf temp
+}
+
 # Remove duplicate packages
 pushd feeds/luci/applications
 rm -rf luci-app-adguardhome luci-app-diskman luci-app-dockerman luci-app-mosdns luci-app-openclash luci-app-zerotier || true       
@@ -21,22 +35,10 @@ wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/applicatio
 wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/Parted.Makefile -O parted/Makefile
 
 # Add luci-lib-docker
-git clone --depth 1 --filter=blob:none --sparse https://github.com/lisaac/luci-lib-docker extra
-pushd extra
-git sparse-checkout init --cone
-git sparse-checkout set collections/luci-lib-docker
-mv */* ../
-popd
-rm -rf extra
+clone_and_extract https://github.com/lisaac/luci-lib-docker collections/luci-lib-docker
 
 # Add luci-app-openclash
-git clone --depth 1 --filter=blob:none --sparse https://github.com/vernesong/OpenClash extra
-pushd extra && rm -rf *
-git sparse-checkout init --cone
-git sparse-checkout set luci-app-openclash
-mv * ../
-popd
-rm -rf extra
+clone_and_extract https://github.com/vernesong/OpenClash luci-app-openclash
 
 
 # Return to "openwrt" directory.
