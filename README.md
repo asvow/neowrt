@@ -1,5 +1,5 @@
 ## OpenWrt Automatic Compilation
-[1]: https://img.shields.io/badge/license-GPL%203.0-brightgreen.svg
+[1]: https://img.shields.io/github/license/asvow/neowrt
 [2]: /LICENSE
 [3]: https://img.shields.io/badge/Thanks-%E2%9D%A4-red.svg
 [4]: /THANKS.md
