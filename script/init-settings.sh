@@ -26,7 +26,7 @@ set network.lan.ipaddr='10.0.0.1'
 delete network.globals.ula_prefix
 commit network
 EOF
-/etc/init.d/network restart
+/etc/init.d/network reload
 
 # Set default dhcp preferences
 # uci batch <<-EOF
