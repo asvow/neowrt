@@ -3,6 +3,9 @@
 
 ---
 
+## 20240129
+* luci-app-tailscale✔
+
 ## 20240120
 * luci-app-adguardhome: Adjust for fw4.
 * luci-app-uhttpd✖️

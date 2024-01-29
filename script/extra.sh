@@ -26,8 +26,8 @@ cd package
 
 
 # Add neo-addon
-# Include luci-app-adguardhome & luci-app-dockerman & luci-app-zerotier
-git clone https://github.com/asvow/neo-addon
+# Include luci-app-adguardhome & luci-app-dockerman & luci-app-tailscale & luci-app-zerotier
+git clone --recurse https://github.com/asvow/neo-addon
 
 # Add luci-app-diskman
 mkdir luci-app-diskman parted
@@ -57,3 +57,6 @@ sed -i 's/\/bin\/ash/\/usr\/bin\/zsh/g' package/base-files/files/etc/passwd
 
 # Use dnsmasq-full instead of dnsmasq
 sed -i 's/dnsmasq /dnsmasq-full /' include/target.mk
+
+# Replace the default startup script and configuration of tailscale.
+sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' feeds/packages/net/tailscale/Makefile
