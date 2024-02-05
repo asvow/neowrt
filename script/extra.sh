@@ -14,10 +14,7 @@ clone_and_extract() {
 
 # Remove duplicate packages
 pushd feeds/luci/applications
-rm -rf luci-app-adguardhome luci-app-diskman luci-app-dockerman luci-app-mosdns luci-app-openclash luci-app-zerotier || true       
-popd
-pushd feeds/luci/collections
-rm -rf luci-lib-docker || true       
+rm -rf luci-app-adguardhome luci-app-diskman luci-app-dockerman luci-app-irqbalance luci-app-mosdns luci-app-openclash luci-app-tailscale luci-app-zerotier || true       
 popd
 
 
@@ -34,8 +31,9 @@ mkdir luci-app-diskman parted
 wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/applications/luci-app-diskman/Makefile -O luci-app-diskman/Makefile
 wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/Parted.Makefile -O parted/Makefile
 
-# Add luci-lib-docker
-clone_and_extract https://github.com/lisaac/luci-lib-docker collections/luci-lib-docker
+# Add luci-app-irqbalance
+clone_and_extract https://github.com/immortalwrt/luci applications/luci-app-irqbalance
+sed -i 's|include ../../luci.mk|include $(TOPDIR)/feeds/luci/luci.mk|' luci-app-irqbalance/Makefile
 
 # Add luci-app-openclash
 clone_and_extract https://github.com/vernesong/OpenClash luci-app-openclash
@@ -60,3 +58,7 @@ sed -i 's/dnsmasq /dnsmasq-full /' include/target.mk
 
 # Replace the default startup script and configuration of tailscale.
 sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' feeds/packages/net/tailscale/Makefile
+
+# Netavark: bomp version to 1.10.2 for native support nftables.
+sed -i "/PKG_VERSION:=/c\PKG_VERSION:=1.10.2" feeds/packages/net/netavark/Makefile
+sed -i "/PKG_HASH:=/c\PKG_HASH:=5df03e3dc82e208dd49684e7b182ffe6c158ad9d9d06cba0c3d4820f471bfaa4" feeds/packages/net/netavark/Makefile
