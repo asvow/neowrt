@@ -1,11 +1,16 @@
 # Changelog
 ###### (auto syncing with the upstream repository)
 
+## 20240207
+* Add Podman network dependency package.
+
+---
+
 ## 20240205
 * luci-app-dockerman✖️
 * crun✔
 * podman✔
-* netavark: bomp version to 1.10.2 for native support nftables.
+* netavark: Bomp version to 1.10.2 for native support nftables.
 
 ---
 
