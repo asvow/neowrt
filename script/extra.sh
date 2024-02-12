@@ -34,7 +34,6 @@ wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/Parted.Mak
 # Add luci-app-irqbalance
 if [ ! -d "../feeds/luci/applications/luci-app-irqbalance" ]; then
   clone_and_extract https://github.com/immortalwrt/luci applications/luci-app-irqbalance
-  sed -i 's|include ../../luci.mk|include $(TOPDIR)/feeds/luci/luci.mk|' luci-app-irqbalance/Makefile
 fi
 
 # Add luci-app-openclash
@@ -43,7 +42,6 @@ clone_and_extract https://github.com/vernesong/OpenClash luci-app-openclash
 # Add luci-proto-external
 if [ ! -d "../feeds/luci/protocols/luci-proto-external" ]; then
   clone_and_extract https://github.com/immortalwrt/luci protocols/luci-proto-external
-  sed -i 's|include ../../luci.mk|include $(TOPDIR)/feeds/luci/luci.mk|' luci-proto-external/Makefile
 fi
 
 # Add external-protocol
@@ -62,6 +60,13 @@ find ./ | grep Makefile | grep v2ray-geodata | xargs rm -f
 find ./ | grep Makefile | grep mosdns | xargs rm -f
 git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
 git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
+
+# Correct path issues
+Makefile_path="$({ find package -name "Makefile" -not -name "Makefile.*"; } 2> "/dev/null")"
+for file in ${Makefile_path}; do
+  sed -i "s|../../lang/golang/golang-package.mk|$(TOPDIR)/feeds/packages/lang/golang/golang-package.mk|g" "$file"
+  sed -i "s|../../luci.mk|$(TOPDIR)/feeds/luci/luci.mk|g" "$file"
+done
 
 # Change default shell to zsh
 sed -i 's/\/bin\/ash/\/usr\/bin\/zsh/g' package/base-files/files/etc/passwd
