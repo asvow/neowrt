@@ -25,10 +25,6 @@ jobs:
       UPLOAD_RELEASE: true
       TZ: Asia/Shanghai
     if: github.repository_owner=='asvow'
-    outputs:
-      OPENWRTROOT: ${{ steps.update.outputs.OPENWRTROOT }}
-      FIRMWARE: ${{ steps.compile.outputs.FIRMWARE }}
-      GENERATE_STATUS: ${{ steps.generate.outputs.GENERATE_STATUS }}
 
     steps:
     - name: Check Server Performance
@@ -73,13 +69,12 @@ jobs:
       run: |
         df -hT $PWD
         git clone $REPO_URL -b $BRANCH openwrt
-        
+        echo "OPENWRTROOT=$PWD/openwrt" >> $GITHUB_ENV
+
     - name: Update & Install Feeds
       id: update
       run: |
-        cd openwrt
-        echo "OPENWRTROOT=$PWD" >> $GITHUB_ENV
-        echo "OPENWRTROOT=$PWD" >> $GITHUB_OUTPUT
+        cd $OPENWRTROOT
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
@@ -89,10 +84,7 @@ jobs:
         [ -e $GITHUB_WORKSPACE/files ] && mv $GITHUB_WORKSPACE/files files
         cat $GITHUB_WORKSPACE/config/device/$DEVICE.config.seed > .config
         cat $GITHUB_WORKSPACE/config/common.config.seed >> .config
-        chmod +x ../script/*.sh
         ../script/extra.sh
-        ../script/preset-clash-core.sh arm64
-        ../script/preset-terminal-tools.sh
         make defconfig
 
     - name: Download Package
@@ -136,15 +128,13 @@ jobs:
         md5sum $VERSION-$DEVICE-ext4.img.gz > $VERSION-$DEVICE-ext4.img.gz.md5
         md5sum $VERSION-$DEVICE-squashfs.img.gz > $VERSION-$DEVICE-squashfs.img.gz.md5
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
-        echo "FIRMWARE=$PWD" >> $GITHUB_OUTPUT
-        echo "GENERATE_STATUS=success"  >> $GITHUB_OUTPUT
 
     - name: Debug Error
       if: steps.compile.outcome == 'failure' || steps.generate.outcome == 'failure' 
       run: |
-        cat openwrt/.config
+        cat $OPENWRTROOT/.config
         echo '================================================================'
-        cd openwrt && make -j1 V=s 
+        cd $OPENWRTROOT && make -j1 V=s 
         
     - name: Generate release tag
       id: tag
@@ -187,4 +177,4 @@ jobs:
       with:
          name: |
             bin-archive
-
+ 

@@ -36,6 +36,7 @@ fi
 
 # Add luci-app-cpufreq
 clone_and_extract https://github.com/immortalwrt/luci applications/luci-app-cpufreq
+clone_and_extract https://github.com/immortalwrt/immortalwrt package/emortal/cpufreq
 
 # Add luci-app-diskman
 mkdir parted
@@ -75,6 +76,8 @@ clone_and_extract https://github.com/immortalwrt/luci applications/luci-app-argo
 # Return to "openwrt" directory.
 cd ../
 
+# Execute all preset shell files in the script directory.
+find ../script/ -name "preset-*.sh" -exec {} \;
 
-# Execute all sh files in the patch directory.
+# Execute all shell files in the patch directory.
 find ../patch/ -name "*.sh" -exec {} \;
