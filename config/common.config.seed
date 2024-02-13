@@ -16,6 +16,9 @@ CONFIG_PACKAGE_luci-app-tailscale=y
 CONFIG_PACKAGE_luci-app-zerotier=y
 CONFIG_PACKAGE_luci-proto-external=y
 
+# System
+CONFIG_PACKAGE_block-mount=y
+
 # Theme
 CONFIG_PACKAGE_luci-app-argon-config=y
 

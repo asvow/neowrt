@@ -14,7 +14,10 @@ clone_and_extract() {
 
 # Remove duplicate packages
 pushd feeds/luci/applications
-rm -rf luci-app-adguardhome luci-app-diskman luci-app-dockerman luci-app-mosdns luci-app-openclash luci-app-tailscale luci-app-zerotier || true       
+rm -rf luci-app-adguardhome luci-app-argon-config luci-app-cpufreq luci-app-diskman luci-app-dockerman luci-app-mosdns luci-app-openclash luci-app-tailscale luci-app-zerotier || true       
+popd
+pushd feeds/luci/themes
+rm -rf luci-theme-argon || true       
 popd
 
 
@@ -23,17 +26,25 @@ cd package
 
 
 # Add neo-addon
-# Include luci-app-adguardhome & luci-app-dockerman & luci-app-tailscale & luci-app-zerotier
+# Include autocore & luci-app-adguardhome & luci-app-dockerman & luci-app-tailscale & luci-app-zerotier
 git clone --recurse https://github.com/asvow/neo-addon
 
+# Add luci-app-alist
+if [ ! -d "../feeds/luci/applications/luci-app-alist" ]; then
+  git clone https://github.com/sbwml/luci-app-alist alist
+fi
+
+# Add luci-app-cpufreq
+clone_and_extract https://github.com/immortalwrt/luci applications/luci-app-cpufreq
+
 # Add luci-app-diskman
-mkdir luci-app-diskman parted
-wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/applications/luci-app-diskman/Makefile -O luci-app-diskman/Makefile
+mkdir parted
 wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/Parted.Makefile -O parted/Makefile
+clone_and_extract https://github.com/lisaac/luci-app-diskman applications/luci-app-diskman
 
 # Add luci-app-irqbalance
 if [ ! -d "../feeds/luci/applications/luci-app-irqbalance" ]; then
-  clone_and_extract https://github.com/immortalwrt/luci applications/luci-app-irqbalance
+  clone_and_extract https://github.com/openwrt/luci applications/luci-app-irqbalance
 fi
 
 # Add luci-app-openclash
@@ -41,13 +52,17 @@ clone_and_extract https://github.com/vernesong/OpenClash luci-app-openclash
 
 # Add luci-proto-external
 if [ ! -d "../feeds/luci/protocols/luci-proto-external" ]; then
-  clone_and_extract https://github.com/immortalwrt/luci protocols/luci-proto-external
+  clone_and_extract https://github.com/openwrt/luci protocols/luci-proto-external
 fi
 
 # Add external-protocol
 if [ ! -d "../feeds/packages/net/external-protocol" ]; then
-  clone_and_extract https://github.com/immortalwrt/packages net/external-protocol
+  clone_and_extract https://github.com/openwrt/packages net/external-protocol
 fi
+
+# Add luci-theme-argon
+clone_and_extract https://github.com/immortalwrt/luci themes/luci-theme-argon
+clone_and_extract https://github.com/immortalwrt/luci applications/luci-app-argon-config
 
 
 # Return to "openwrt" directory.
@@ -64,8 +79,8 @@ git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 # Correct path issues
 Makefile_path="$({ find package -name "Makefile" -not -name "Makefile.*"; } 2> "/dev/null")"
 for file in ${Makefile_path}; do
-  sed -i "s|../../lang/golang/golang-package.mk|$(TOPDIR)/feeds/packages/lang/golang/golang-package.mk|g" "$file"
-  sed -i "s|../../luci.mk|$(TOPDIR)/feeds/luci/luci.mk|g" "$file"
+  sed -i 's|../../lang/golang/golang-package.mk|$(TOPDIR)/feeds/packages/lang/golang/golang-package.mk|g' $file
+  sed -i 's|../../luci.mk|$(TOPDIR)/feeds/luci/luci.mk|g' $file
 done
 
 # Change default shell to zsh
@@ -95,3 +110,6 @@ echo 'msgstr "使用外部协议更改网络后，需要重启网络服务。"' 
 echo >> $target_file
 echo 'msgid "Search domain"' >> $target_file
 echo 'msgstr "查找域"' >> $target_file
+
+# Patch for autocore
+../patch/patch_autocore.sh

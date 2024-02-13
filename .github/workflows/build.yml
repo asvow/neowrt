@@ -10,7 +10,7 @@ on:
         required: false
       branch:
         description: 'seleclt openwrt branch'
-        default: 'master'
+        default: 'main'
         required: false
 
 jobs:
@@ -21,7 +21,7 @@ jobs:
     env:
       DEVICE: ${{ github.event.client_payload.device || github.event.inputs.device }}
       BRANCH: ${{ github.event.client_payload.branch || github.event.inputs.branch }}
-      REPO_URL: https://github.com/immortalwrt/immortalwrt
+      REPO_URL: https://github.com/openwrt/openwrt
       UPLOAD_RELEASE: true
       TZ: Asia/Shanghai
     if: github.repository_owner=='asvow'
@@ -129,7 +129,7 @@ jobs:
         make package/install -j$(nproc)
         make target/install -j$(nproc)
         mkdir -p $GITHUB_WORKSPACE/release
-        VERSION="openwrt-$( [[ "${BRANCH}" == "master" ]] && echo "snapshot" || echo "${BRANCH}" )"
+        VERSION="openwrt-$( [[ "${BRANCH}" == "main" ]] && echo "snapshot" || echo "${BRANCH}" )"
         mv $(ls -1 ./bin/targets/*/*/*$DEVICE*ext4*img.gz | head -1) $GITHUB_WORKSPACE/release/$VERSION-$DEVICE-ext4.img.gz
         mv $(ls -1 ./bin/targets/*/*/*$DEVICE*squashfs*img.gz | head -1) $GITHUB_WORKSPACE/release/$VERSION-$DEVICE-squashfs.img.gz
         cd $GITHUB_WORKSPACE/release

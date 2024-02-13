@@ -1,13 +1,19 @@
 # Changelog
 ###### (auto syncing with the upstream repository)
 
+## 20240213
+* Switch to official OpenWrt source code.
+* Add autocore universal patch.
+
+---
+
 ## 20240207
 * Add Podman network dependency package.
 
 ---
 
 ## 20240205
-* luci-app-dockerman✖️
+* ~~luci-app-dockerman~~
 * crun✔
 * podman✔
 * netavark: Bomp version to 1.10.2 for native support nftables.
@@ -21,7 +27,7 @@
 
 ## 20240120
 * luci-app-adguardhome: Adjust for fw4.
-* luci-app-uhttpd✖️
+* ~~luci-app-uhttpd~~
 * uhttpd✔
 
 ---

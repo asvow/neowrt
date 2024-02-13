@@ -14,11 +14,11 @@ commit system
 EOF
 
 # Set default luci preferences
-# uci batch <<EOF
-# set luci.main.lang='auto'
-# set luci.main.mediaurlbase='/luci-static/argon'
-# commit luci
-# EOF
+uci batch <<EOF
+set luci.main.lang='auto'
+set luci.main.mediaurlbase='/luci-static/argon'
+commit luci
+EOF
 
 # Set default network preferences
 uci batch <<EOF
@@ -29,20 +29,21 @@ EOF
 /etc/init.d/network reload
 
 # Set default dhcp preferences
-# uci batch <<-EOF
-# delete dhcp.lan.dhcpv6
-# delete dhcp.lan.ra_flags
-# add_list dhcp.lan.ra_flags="other-config"
-# set dhcp.lan.max_preferred_lifetime="2700"
-# set dhcp.lan.max_valid_lifetime="5400"
-# commit dhcp
-# EOF
+uci batch <<-EOF
+delete dhcp.lan.dhcpv6
+delete dhcp.lan.ra_flags
+set dhcp.lan.dhcpv6="hybrid"
+set dhcp.lan.ra_flags="other-config"
+set dhcp.lan.max_preferred_lifetime="2700"
+set dhcp.lan.max_valid_lifetime="5400"
+commit dhcp
+EOF
 
 # Disable opkg signature check
 # sed -i 's/option check_signature/# option check_signature/g' /etc/opkg.conf
 
 # Switch opkg to a Chinese mirror
-#sed -i 's/downloads.openwrt.org/mirrors.tuna.tsinghua.edu.cn\/openwrt/g' /etc/opkg/distfeeds.conf
+sed -i 's/downloads.openwrt.org/mirrors.tuna.tsinghua.edu.cn\/openwrt/g' /etc/opkg/distfeeds.conf
 
 # Try to execute init.sh (if exists)
 [ -f "/boot/init.sh" ] && /bin/sh /boot/init.sh
