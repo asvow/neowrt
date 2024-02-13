@@ -4,6 +4,7 @@
 ## 20240213
 * Switch to official OpenWrt source code.
 * Add autocore universal patch.
+* Add rockchip rk3399 overclock to 2.2-1.8 GHz patch.
 
 ---
 
