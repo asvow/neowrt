@@ -1,19 +1,12 @@
 #!/bin/bash
 #=================================================
-# File name: patch_autocore.sh
+# File name: patch-autocore.sh
 # System Required: Linux
 # Version: 1.0
 # Lisence: GPL-3.0
 # Author: AsVow
 # Blog: https://asvow.com
 #=================================================
-set -e
-
-file_a="feeds/luci/modules/luci-base/root/usr/share/rpcd/ucode/luci"
-file_b="feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js"
-file_c="feeds/luci/modules/luci-mod-status/root/usr/share/rpcd/acl.d/luci-mod-status.json"
-insert_path="$(dirname "$0")/autocore"
-
 execute_sed() {
     local file=$1
     local pattern=$2
@@ -42,6 +35,11 @@ execute_sed() {
     sed -i 's#£#\n#g' $file
     sed -i 's#€#\t#g' $file
 }
+
+insert_path="$GITHUB_WORKSPACE/patch/autocore"
+file_a="$OPENWRTROOT/feeds/luci/modules/luci-base/root/usr/share/rpcd/ucode/luci"
+file_b="$OPENWRTROOT/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js"
+file_c="$OPENWRTROOT/feeds/luci/modules/luci-mod-status/root/usr/share/rpcd/acl.d/luci-mod-status.json"
 
 execute_sed $file_a "\t}\n};\n\n" "$insert_path/ucode_luci" "above"
 

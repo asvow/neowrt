@@ -13,16 +13,16 @@ clone_and_extract() {
 }
 
 # Remove duplicate packages
-pushd feeds/luci/applications
+pushd $OPENWRTROOT/feeds/luci/applications
 rm -rf luci-app-adguardhome luci-app-argon-config luci-app-cpufreq luci-app-diskman luci-app-dockerman luci-app-mosdns luci-app-openclash luci-app-tailscale luci-app-zerotier || true       
 popd
-pushd feeds/luci/themes
+pushd $OPENWRTROOT/feeds/luci/themes
 rm -rf luci-theme-argon || true       
 popd
 
 
 # Enter the "package" directory.
-cd package
+cd $OPENWRTROOT/package
 
 
 # Add neo-addon
@@ -30,7 +30,7 @@ cd package
 git clone --recurse https://github.com/asvow/neo-addon
 
 # Add luci-app-alist
-if [ ! -d "../feeds/luci/applications/luci-app-alist" ]; then
+if [ ! -d "$OPENWRTROOT/feeds/luci/applications/luci-app-alist" ]; then
   git clone https://github.com/sbwml/luci-app-alist alist
 fi
 
@@ -44,7 +44,7 @@ wget https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/Parted.Mak
 clone_and_extract https://github.com/lisaac/luci-app-diskman applications/luci-app-diskman
 
 # Add luci-app-irqbalance
-if [ ! -d "../feeds/luci/applications/luci-app-irqbalance" ]; then
+if [ ! -d "$OPENWRTROOT/feeds/luci/applications/luci-app-irqbalance" ]; then
   clone_and_extract https://github.com/openwrt/luci applications/luci-app-irqbalance
 fi
 
@@ -59,12 +59,12 @@ git clone https://github.com/sbwml/v2ray-geodata
 clone_and_extract https://github.com/vernesong/OpenClash luci-app-openclash
 
 # Add luci-proto-external
-if [ ! -d "../feeds/luci/protocols/luci-proto-external" ]; then
+if [ ! -d "$OPENWRTROOT/feeds/luci/protocols/luci-proto-external" ]; then
   clone_and_extract https://github.com/openwrt/luci protocols/luci-proto-external
 fi
 
 # Add external-protocol
-if [ ! -d "../feeds/packages/net/external-protocol" ]; then
+if [ ! -d "$OPENWRTROOT/feeds/packages/net/external-protocol" ]; then
   clone_and_extract https://github.com/openwrt/packages net/external-protocol
 fi
 
@@ -74,10 +74,7 @@ clone_and_extract https://github.com/immortalwrt/luci applications/luci-app-argo
 
 
 # Return to "openwrt" directory.
-cd ../
+cd $OPENWRTROOT
 
-# Execute all preset shell files in the script directory.
-find ../script/ -name "preset-*.sh" -exec {} \;
-
-# Execute all shell files in the patch directory.
-find ../patch/ -name "*.sh" -exec {} \;
+# Execute all patch & preset shell files in the script directory.
+find $GITHUB_WORKSPACE/script/ \( -name "patch-*.sh" -o -name "preset-*.sh" \) -exec {} \;

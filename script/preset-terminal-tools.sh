@@ -7,8 +7,8 @@
 # Author: SuLingGG
 # Blog: https://mlapp.cn
 #=================================================
-mkdir -p files/root
-pushd files/root
+mkdir -p $OPENWRTROOT/files/root
+pushd $OPENWRTROOT/files/root
 
 ## Install oh-my-zsh
 # Clone oh-my-zsh repository
@@ -20,7 +20,7 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ./.oh-my-zsh/
 git clone https://github.com/zsh-users/zsh-completions ./.oh-my-zsh/custom/plugins/zsh-completions
 
 # Get .zshrc dotfile
-cp $GITHUB_WORKSPACE/script/.zshrc .
+cp $GITHUB_WORKSPACE/patch/zsh/.zshrc .
 
 popd
 

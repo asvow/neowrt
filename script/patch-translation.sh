@@ -1,14 +1,13 @@
 #!/bin/bash
 #=================================================
-# File name: patch_translation.sh
+# File name: patch-translation.sh
 # System Required: Linux
 # Version: 1.0
 # Lisence: GPL-3.0
 # Author: AsVow
 # Blog: https://asvow.com
 #=================================================
-
-target_file="feeds/luci/modules/luci-base/po/zh_Hans/base.po"
+target_file="$OPENWRTROOT/feeds/luci/modules/luci-base/po/zh_Hans/base.po"
 
 append_translation() {
     echo >> $target_file
