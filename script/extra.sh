@@ -3,7 +3,8 @@ clone_and_extract() {
   repo_url=$1
   target_path=$2
   target_dir=../$(basename $target_path)
-  git clone --depth 1 --filter=blob:none --sparse $repo_url temp
+  branch=$3
+  git clone --depth 1 --filter=blob:none --sparse ${branch:+--branch=$branch} $repo_url temp
   pushd temp
   git sparse-checkout init --cone
   git sparse-checkout set $target_path
