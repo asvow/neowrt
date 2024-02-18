@@ -10,6 +10,7 @@
 * luci-app-dockerman✔
 * ~~crun~~
 * ~~podman~~
+* rockchip: set CPU overclocking voltage to 1.35V.
 
 ---
 
