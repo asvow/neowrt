@@ -10,7 +10,11 @@
 patch_path="$GITHUB_WORKSPACE/patch/kernel"
 
 if [ "$DEVICE" == "nanopi-r4s" ]; then
-    for dir in $OPENWRTROOT/target/linux/rockchip/patches*/; do
-        cp -r $patch_path/rockchip/*.patch $dir
+    for dir in $OPENWRTROOT/target/linux/{rockchip/patches*,generic/hack*}/; do
+        if [[ $dir == *"rockchip"* ]]; then
+            cp -r $patch_path/rockchip/*.patch $dir
+        elif [[ $dir == *"generic"* ]]; then
+            cp -r $patch_path/generic/*.patch $dir
+        fi
     done
 fi

@@ -2,7 +2,8 @@
 ###### (auto syncing with the upstream repository)
 
 ## 20240218
-* luci-app-dockerman✔
+* Add model name patch for arm64.
+* luci-app-dockerman✔ 
 * ~~crun~~
 * ~~podman~~
 
