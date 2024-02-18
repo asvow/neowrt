@@ -6,6 +6,7 @@
 * Add CPUBench universal patch.
 * Add Online Users universal patch.
 * coremark✔
+* docker: Add optional configurations.
 * luci-app-dockerman✔
 * ~~crun~~
 * ~~podman~~
