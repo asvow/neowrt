@@ -40,6 +40,7 @@ insert_path="$GITHUB_WORKSPACE/patch/status-view"
 file_a="$OPENWRTROOT/feeds/luci/modules/luci-base/root/usr/share/rpcd/ucode/luci"
 file_b="$OPENWRTROOT/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js"
 file_c="$OPENWRTROOT/feeds/luci/modules/luci-mod-status/root/usr/share/rpcd/acl.d/luci-mod-status.json"
+file_d="$OPENWRTROOT/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/30_network.js"
 
 execute_sed $file_a "\t}\n};\n\n" "$insert_path/ucode-luci" "above"
 
@@ -51,3 +52,9 @@ execute_sed $file_b "\t\t\t) : null" "$insert_path/system-e.js" "append"
 execute_sed $file_b "\t\t];" "$insert_path/system-f.js" "below"
 
 execute_sed $file_c '\n\t\t\t\t"luci": \[ "getConntrackList", "getRealtimeStats" \],' "$insert_path/luci-mod-status.json" "below" "true"
+
+execute_sed $file_d "'require network';" "$insert_path/network-a.js" "below"
+execute_sed $file_d "network.getWAN6Networks()" "$insert_path/network-b.js" "append"
+execute_sed $file_d "wan6_nets = data\[3\]" "$insert_path/network-c.js" "append"
+execute_sed $file_d "_('Active Connections'), ct_max ? ct_count : null" "$insert_path/network-d.js" "append"
+execute_sed $file_d "\n\t\t\tctstatus.appendChild(E('tr', { 'class': 'tr' }, \[\n\t\t\t\tE('td', { 'class': 'td left', 'width': '33%' }, \[ fields\[i\] \]),\n\t\t\t\tE('td', { 'class': 'td left' }, \[\n\t\t\t\t\t(fields\[i + 1\] != null) ? progressbar(fields\[i + 1\], ct_max) : '?'\n\t\t\t\t\])\n\t\t\t\]));" "$insert_path/network-e.js" "below" "true"

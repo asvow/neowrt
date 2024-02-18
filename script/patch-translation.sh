@@ -19,3 +19,4 @@ append_translation() {
 # append_translation "Delay" "延迟"
 # append_translation "Afer making changes to network using external protocol, network must be manually restarted." "使用外部协议更改网络后，需要重启网络服务。"
 # append_translation "Search domain" "查找域"
+append_translation "Online Users" "在线用户数"

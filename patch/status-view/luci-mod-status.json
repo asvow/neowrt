@@ -1,1 +1,1 @@
-				"luci": [ "getConntrackList", "getRealtimeStats", "getCPUBench", "getCPUUsage" ],
+				"luci": [ "getConntrackList", "getRealtimeStats", "getCPUBench", "getCPUUsage", "getOnlineUsers" ],

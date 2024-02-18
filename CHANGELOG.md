@@ -4,6 +4,7 @@
 ## 20240218
 * Add model name patch for arm64.
 * Add CPUBench universal patch.
+* Add Online Users universal patch.
 * coremark✔
 * luci-app-dockerman✔
 * ~~crun~~
