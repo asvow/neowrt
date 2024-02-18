@@ -1,3 +1,7 @@
+var callCPUBench = rpc.declare({
+	object: 'luci',
+	method: 'getCPUBench'
+});
 
 var callCPUInfo = rpc.declare({
 	object: 'luci',

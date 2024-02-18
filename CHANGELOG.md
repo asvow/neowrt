@@ -3,7 +3,9 @@
 
 ## 20240218
 * Add model name patch for arm64.
-* luci-app-dockerman✔ 
+* Add CPUBench universal patch.
+* coremark✔
+* luci-app-dockerman✔
 * ~~crun~~
 * ~~podman~~
 

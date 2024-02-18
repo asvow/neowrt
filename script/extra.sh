@@ -17,8 +17,13 @@ clone_and_extract() {
 pushd $OPENWRTROOT/feeds/luci/applications
 rm -rf luci-app-adguardhome luci-app-argon-config luci-app-cpufreq luci-app-diskman luci-app-mosdns luci-app-openclash luci-app-tailscale luci-app-zerotier || true       
 popd
+
 pushd $OPENWRTROOT/feeds/luci/themes
 rm -rf luci-theme-argon || true       
+popd
+
+pushd $OPENWRTROOT/feeds/packages/utils
+rm -rf coremark || true       
 popd
 
 
@@ -29,6 +34,9 @@ cd $OPENWRTROOT/package
 # Add neo-addon
 # Include autocore & luci-app-adguardhome & luci-app-tailscale & luci-app-zerotier
 git clone --recurse https://github.com/asvow/neo-addon
+
+# Add coremark
+clone_and_extract https://github.com/immortalwrt/packages utils/coremark
 
 # Add luci-app-alist
 if [ ! -d "$OPENWRTROOT/feeds/luci/applications/luci-app-alist" ]; then

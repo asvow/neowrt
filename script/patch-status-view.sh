@@ -36,18 +36,18 @@ execute_sed() {
     sed -i 's#€#\t#g' $file
 }
 
-insert_path="$GITHUB_WORKSPACE/patch/autocore"
+insert_path="$GITHUB_WORKSPACE/patch/status-view"
 file_a="$OPENWRTROOT/feeds/luci/modules/luci-base/root/usr/share/rpcd/ucode/luci"
 file_b="$OPENWRTROOT/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js"
 file_c="$OPENWRTROOT/feeds/luci/modules/luci-mod-status/root/usr/share/rpcd/acl.d/luci-mod-status.json"
 
-execute_sed $file_a "\t}\n};\n\n" "$insert_path/ucode_luci" "above"
+execute_sed $file_a "\t}\n};\n\n" "$insert_path/ucode-luci" "above"
 
-execute_sed $file_b "method: 'info'\n});" "$insert_path/status_a.js" "below"
-execute_sed $file_b "L.resolveDefault(callSystemInfo(), {})," "$insert_path/status_b.js" "below"
-execute_sed $file_b "\n\t\t    luciversion = data\[2\];" "$insert_path/status_c.js" "below" "true"
-execute_sed $file_b "\n\t\t\t_('Architecture'),     boardinfo.system," "$insert_path/status_d.js" "below" "true"
-execute_sed $file_b "\t\t\t) : null" "$insert_path/status_e.js" "append"
-execute_sed $file_b "\t\t];" "$insert_path/status_f.js" "below"
+execute_sed $file_b "method: 'info'\n});" "$insert_path/system-a.js" "below"
+execute_sed $file_b "L.resolveDefault(callSystemInfo(), {})," "$insert_path/system-b.js" "below"
+execute_sed $file_b "\n\t\t    luciversion = data\[2\];" "$insert_path/system-c.js" "below" "true"
+execute_sed $file_b "\n\t\t\t_('Model'),            boardinfo.model,\n\t\t\t_('Architecture'),     boardinfo.system," "$insert_path/system-d.js" "below" "true"
+execute_sed $file_b "\t\t\t) : null" "$insert_path/system-e.js" "append"
+execute_sed $file_b "\t\t];" "$insert_path/system-f.js" "below"
 
-execute_sed $file_c '\n\t\t\t\t"luci": \[ "getConntrackList", "getRealtimeStats" \],' "$insert_path/status_rpcd_acl.json" "below" "true"
+execute_sed $file_c '\n\t\t\t\t"luci": \[ "getConntrackList", "getRealtimeStats" \],' "$insert_path/luci-mod-status.json" "below" "true"
