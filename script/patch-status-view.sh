@@ -1,6 +1,6 @@
 #!/bin/bash
 #=================================================
-# File name: patch-autocore.sh
+# File name: patch-status-view.sh
 # System Required: Linux
 # Version: 1.0
 # Lisence: GPL-3.0
