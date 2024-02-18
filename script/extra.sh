@@ -36,7 +36,7 @@ cd $OPENWRTROOT/package
 git clone --recurse https://github.com/asvow/neo-addon
 
 # Add coremark
-clone_and_extract https://github.com/immortalwrt/packages utils/coremark
+clone_and_extract https://github.com/coolsnowwolf/packages utils/coremark
 
 # Add luci-app-alist
 if [ ! -d "$OPENWRTROOT/feeds/luci/applications/luci-app-alist" ]; then
