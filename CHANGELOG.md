@@ -1,6 +1,13 @@
 # Changelog
 ###### (auto syncing with the upstream repository)
 
+## 20240218
+* luci-app-dockerman✔
+* ~~crun~~
+* ~~podman~~
+
+---
+
 ## 20240213
 * Switch to official OpenWrt source code.
 * Add autocore universal patch.

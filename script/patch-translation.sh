@@ -15,7 +15,7 @@ append_translation() {
     echo "msgstr \"$2\"" >> $target_file
 }
 
-append_translation "Externally managed interface" "外部协议"
-append_translation "Delay" "延迟"
-append_translation "Afer making changes to network using external protocol, network must be manually restarted." "使用外部协议更改网络后，需要重启网络服务。"
-append_translation "Search domain" "查找域"
+# append_translation "Externally managed interface" "外部协议"
+# append_translation "Delay" "延迟"
+# append_translation "Afer making changes to network using external protocol, network must be manually restarted." "使用外部协议更改网络后，需要重启网络服务。"
+# append_translation "Search domain" "查找域"

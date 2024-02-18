@@ -14,7 +14,7 @@ clone_and_extract() {
 
 # Remove duplicate packages
 pushd $OPENWRTROOT/feeds/luci/applications
-rm -rf luci-app-adguardhome luci-app-argon-config luci-app-cpufreq luci-app-diskman luci-app-dockerman luci-app-mosdns luci-app-openclash luci-app-tailscale luci-app-zerotier || true       
+rm -rf luci-app-adguardhome luci-app-argon-config luci-app-cpufreq luci-app-diskman luci-app-mosdns luci-app-openclash luci-app-tailscale luci-app-zerotier || true       
 popd
 pushd $OPENWRTROOT/feeds/luci/themes
 rm -rf luci-theme-argon || true       
@@ -26,7 +26,7 @@ cd $OPENWRTROOT/package
 
 
 # Add neo-addon
-# Include autocore & luci-app-adguardhome & luci-app-dockerman & luci-app-tailscale & luci-app-zerotier
+# Include autocore & luci-app-adguardhome & luci-app-tailscale & luci-app-zerotier
 git clone --recurse https://github.com/asvow/neo-addon
 
 # Add luci-app-alist
@@ -59,14 +59,14 @@ git clone https://github.com/sbwml/v2ray-geodata
 clone_and_extract https://github.com/vernesong/OpenClash luci-app-openclash
 
 # Add luci-proto-external
-if [ ! -d "$OPENWRTROOT/feeds/luci/protocols/luci-proto-external" ]; then
-  clone_and_extract https://github.com/openwrt/luci protocols/luci-proto-external
-fi
+# if [ ! -d "$OPENWRTROOT/feeds/luci/protocols/luci-proto-external" ]; then
+#   clone_and_extract https://github.com/openwrt/luci protocols/luci-proto-external
+# fi
 
 # Add external-protocol
-if [ ! -d "$OPENWRTROOT/feeds/packages/net/external-protocol" ]; then
-  clone_and_extract https://github.com/openwrt/packages net/external-protocol
-fi
+# if [ ! -d "$OPENWRTROOT/feeds/packages/net/external-protocol" ]; then
+#   clone_and_extract https://github.com/openwrt/packages net/external-protocol
+# fi
 
 # Add luci-theme-argon
 clone_and_extract https://github.com/immortalwrt/luci themes/luci-theme-argon

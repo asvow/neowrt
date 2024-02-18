@@ -23,5 +23,8 @@ sed -i 's/dnsmasq /dnsmasq-full /' $OPENWRTROOT/include/target.mk
 sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' $OPENWRTROOT/feeds/packages/net/tailscale/Makefile
 
 # Netavark: bomp version to 1.10.2 for native support nftables.
-sed -i "/PKG_VERSION:=/c\PKG_VERSION:=1.10.2" $OPENWRTROOT/feeds/packages/net/netavark/Makefile
-sed -i "/PKG_HASH:=/c\PKG_HASH:=5df03e3dc82e208dd49684e7b182ffe6c158ad9d9d06cba0c3d4820f471bfaa4" $OPENWRTROOT/feeds/packages/net/netavark/Makefile
+# sed -i "/PKG_VERSION:=/c\PKG_VERSION:=1.10.2" $OPENWRTROOT/feeds/packages/net/netavark/Makefile
+# sed -i "/PKG_HASH:=/c\PKG_HASH:=5df03e3dc82e208dd49684e7b182ffe6c158ad9d9d06cba0c3d4820f471bfaa4" $OPENWRTROOT/feeds/packages/net/netavark/Makefile
+
+# Fix docker bridge network
+sed -i 's/list blocked_interfaces '\''wan'\''/#&/' $OPENWRTROOT/feeds/packages/utils/dockerd/files/etc/config/dockerd
