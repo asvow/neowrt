@@ -28,7 +28,7 @@ preset_clash_core() {
 
 config_path="$GITHUB_WORKSPACE/config/device/$DEVICE.config.seed"
 
-if grep -q "cortex-a53" $config_path; then
+if grep -q "armv8" $config_path; then
     preset_clash_core arm64
 elif grep -q "x86_64" $config_path; then
     preset_clash_core amd64
