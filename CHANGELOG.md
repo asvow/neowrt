@@ -1,6 +1,11 @@
 # Changelog
 ###### (auto syncing with the upstream repository)
 
+## 20240219
+* luci-app-dockerman: hide config buttons in overview page.
+
+---
+
 ## 20240218
 * Add model name patch for arm64.
 * Add CPUBench universal patch.
