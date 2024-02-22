@@ -90,6 +90,7 @@ jobs:
         cat $GITHUB_WORKSPACE/config/common.config.seed >> .config
         ../script/extra.sh
         make defconfig
+        ../script/external-toolchain.sh
 
     - name: Download Package
       id: package

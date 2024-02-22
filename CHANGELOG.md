@@ -1,6 +1,11 @@
 # Changelog
 ###### (auto syncing with the upstream repository)
 
+## 20240223
+* Compile using the official OpenWrt External Toolchain.
+
+---
+
 ## 20240222
 * luci-app-daed✔
 
