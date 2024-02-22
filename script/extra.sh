@@ -15,15 +15,15 @@ clone_and_extract() {
 
 # Remove duplicate packages
 pushd $OPENWRTROOT/feeds/luci/applications
-rm -rf luci-app-adguardhome luci-app-argon-config luci-app-cpufreq luci-app-diskman luci-app-mosdns luci-app-openclash luci-app-tailscale luci-app-zerotier || true       
+rm -rf luci-app-adguardhome luci-app-argon-config luci-app-cpufreq luci-app-diskman luci-app-mosdns luci-app-openclash luci-app-tailscale luci-app-zerotier || true
 popd
 
 pushd $OPENWRTROOT/feeds/luci/themes
-rm -rf luci-theme-argon || true       
+rm -rf luci-theme-argon || true
 popd
 
 pushd $OPENWRTROOT/feeds/packages/utils
-rm -rf coremark || true       
+rm -rf coremark || true
 popd
 
 
@@ -37,6 +37,15 @@ git clone --recurse https://github.com/asvow/neo-addon
 
 # Add coremark
 clone_and_extract https://github.com/coolsnowwolf/packages utils/coremark
+
+# Add dae
+if [ ! -d "$OPENWRTROOT/feeds/packages/net/daed" ]; then
+  clone_and_extract https://github.com/immortalwrt/packages net/daed
+  sed -i 's/@IMMORTALWRT/https:\/\/sources-cdn.immortalwrt.org/g' daed/Makefile
+fi
+if [ ! -d "$OPENWRTROOT/feeds/luci/applications/luci-app-daed" ]; then
+  clone_and_extract https://github.com/immortalwrt/luci applications/luci-app-daed
+fi
 
 # Add luci-app-alist
 if [ ! -d "$OPENWRTROOT/feeds/luci/applications/luci-app-alist" ]; then

@@ -32,4 +32,4 @@ if grep -q "armv8" $config_path; then
     preset_clash_core arm64
 elif grep -q "x86_64" $config_path; then
     preset_clash_core amd64
-fi 
+fi

@@ -1,6 +1,11 @@
 # Changelog
 ###### (auto syncing with the upstream repository)
 
+## 20240222
+* luci-app-daed✔
+
+---
+
 ## 20240219
 * luci-app-dockerman: hide config buttons in overview page.
 

@@ -65,6 +65,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
+    - name: Update Clang Alternatives
+      run: |
+        $GITHUB_WORKSPACE/script/update-clang-alternatives.sh
+
     - name: Clone Source Code
       run: |
         df -hT $PWD
@@ -108,7 +112,7 @@ jobs:
         make diffconfig
         make package/compile -j$(nproc)
         make package/index
-        echo "COMPILE_STATUS=success" >> $GITHUB_OUTPUT 
+        echo "COMPILE_STATUS=success" >> $GITHUB_OUTPUT
 
     - name: Generate Firmware
       if: steps.compile.outputs.COMPILE_STATUS == 'success'
@@ -130,11 +134,11 @@ jobs:
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
 
     - name: Debug Error
-      if: steps.compile.outcome == 'failure' || steps.generate.outcome == 'failure' 
+      if: steps.compile.outcome == 'failure' || steps.generate.outcome == 'failure'
       run: |
         cat $OPENWRTROOT/.config
         echo '================================================================'
-        cd $OPENWRTROOT && make -j1 V=s 
+        cd $OPENWRTROOT && make -j1 V=s
         
     - name: Generate release tag
       id: tag
@@ -177,4 +181,3 @@ jobs:
       with:
          name: |
             bin-archive
- 
