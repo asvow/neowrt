@@ -8,32 +8,32 @@
 # Blog: https://asvow.com
 #=================================================
 execute_sed() {
-    local file=$1
-    local pattern=$2
-    local insert_text=$(cat $3 | sed -e 's#\t#€#g' -e ':a;N;$!ba;s#\n#£#g' -e 's#[]\.|$(){}?+*^]#\\&#g')
-    local position=$4
-    local delete=${5:-false}
-    local single_line_pattern=$(echo "$pattern" | sed -e 's#\\n#£#g' -e 's#\\t#€#g')
+  local file=$1
+  local pattern=$2
+  local insert_text=$(cat $3 | sed -e 's#\t#€#g' -e ':a;N;$!ba;s#\n#£#g' -e 's#[]\.|$(){}?+*^]#\\&#g')
+  local position=$4
+  local delete=${5:-false}
+  local single_line_pattern=$(echo "$pattern" | sed -e 's#\\n#£#g' -e 's#\\t#€#g')
 
-    sed -i 's#\t#€#g' $file
-    sed -i ':a;N;$!ba;s#\n#£#g' $file
+  sed -i 's#\t#€#g' $file
+  sed -i ':a;N;$!ba;s#\n#£#g' $file
 
-    if grep -q "$single_line_pattern" $file; then
-        if [ "$position" = "above" ]; then
-            sed -i "s#$single_line_pattern#$insert_text£$single_line_pattern#g" $file
-        elif [ "$position" = "below" ]; then
-            sed -i "s#$single_line_pattern#$single_line_pattern£$insert_text#g" $file
-        elif [ "$position" = "append" ]; then
-            sed -i "s#$single_line_pattern#$single_line_pattern$insert_text#g" $file
-        fi
-        [ "$delete" = "true" ] && sed -i "s#$single_line_pattern##g" $file
-    else
-        echo "Pattern '$pattern' not found in $file"
-        exit 1
+  if grep -q "$single_line_pattern" $file; then
+    if [ "$position" = "above" ]; then
+      sed -i "s#$single_line_pattern#$insert_text£$single_line_pattern#g" $file
+    elif [ "$position" = "below" ]; then
+      sed -i "s#$single_line_pattern#$single_line_pattern£$insert_text#g" $file
+    elif [ "$position" = "append" ]; then
+      sed -i "s#$single_line_pattern#$single_line_pattern$insert_text#g" $file
     fi
+    [ "$delete" = "true" ] && sed -i "s#$single_line_pattern##g" $file
+  else
+    echo "Pattern '$pattern' not found in $file"
+    exit 1
+  fi
 
-    sed -i 's#£#\n#g' $file
-    sed -i 's#€#\t#g' $file
+  sed -i 's#£#\n#g' $file
+  sed -i 's#€#\t#g' $file
 }
 
 insert_path="$GITHUB_WORKSPACE/patch/status-view"

@@ -16,9 +16,9 @@ sudo -E apt-get install -y clang-$ver
 BINARIES=($(ls /usr/bin | grep -E "(clang|llvm).*${ver}"))
 
 for bin in "${BINARIES[@]}"; do
-    if [ -f "/usr/bin/$bin" ]; then
-        sudo -E update-alternatives --install "/usr/bin/${bin//-$ver}" "${bin//-$ver}" "/usr/bin/$bin" 100
-    else
-        echo "Binary /usr/bin/$bin does not exist."
-    fi
+  if [ -f "/usr/bin/$bin" ]; then
+    sudo -E update-alternatives --install "/usr/bin/${bin//-$ver}" "${bin//-$ver}" "/usr/bin/$bin" 100
+  else
+    echo "Binary /usr/bin/$bin does not exist."
+  fi
 done

@@ -3,6 +3,7 @@
 
 ## 20240223
 * Compile using the official OpenWrt External Toolchain.
+* Add support for x86-64.
 
 ---
 

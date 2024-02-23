@@ -10,9 +10,9 @@
 target_file="$OPENWRTROOT/feeds/luci/modules/luci-base/po/zh_Hans/base.po"
 
 append_translation() {
-    echo >> $target_file
-    echo "msgid \"$1\"" >> $target_file
-    echo "msgstr \"$2\"" >> $target_file
+  echo >> $target_file
+  echo "msgid \"$1\"" >> $target_file
+  echo "msgstr \"$2\"" >> $target_file
 }
 
 # append_translation "Externally managed interface" "外部协议"

@@ -100,7 +100,7 @@ jobs:
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-  
+
     - name: Compile Packages
       id: compile
       continue-on-error: true
@@ -125,14 +125,16 @@ jobs:
         cp ../script/init-settings.sh files/etc/uci-defaults/99-init-settings
         make package/install -j$(nproc)
         make target/install -j$(nproc)
+        VERSION=$( [[ "${BRANCH}" == "main" ]] && echo "snapshot" || echo "${BRANCH}" )
         mkdir -p $GITHUB_WORKSPACE/release
-        VERSION="openwrt-$( [[ "${BRANCH}" == "main" ]] && echo "snapshot" || echo "${BRANCH}" )"
-        mv $(ls -1 ./bin/targets/*/*/*$DEVICE*ext4*img.gz | head -1) $GITHUB_WORKSPACE/release/$VERSION-$DEVICE-ext4.img.gz
-        mv $(ls -1 ./bin/targets/*/*/*$DEVICE*squashfs*img.gz | head -1) $GITHUB_WORKSPACE/release/$VERSION-$DEVICE-squashfs.img.gz
-        cd $GITHUB_WORKSPACE/release
-        md5sum $VERSION-$DEVICE-ext4.img.gz > $VERSION-$DEVICE-ext4.img.gz.md5
-        md5sum $VERSION-$DEVICE-squashfs.img.gz > $VERSION-$DEVICE-squashfs.img.gz.md5
-        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+        images=($(ls -1 ./bin/targets/*/*/*img.gz | grep -v "rootfs"))
+        for image in "${images[@]}"; do
+          imagename=$(echo $(basename $image) | sed "s/openwrt/openwrt-$VERSION/g")
+          mv $image $GITHUB_WORKSPACE/release/$imagename
+          md5value=$(md5sum $GITHUB_WORKSPACE/release/$imagename | awk '{ print $1 }')
+          echo "$imagename: $md5value" >> $GITHUB_WORKSPACE/release/$imagename.md5
+        done
+        echo "FIRMWARE=$GITHUB_WORKSPACE/release" >> $GITHUB_ENV
 
     - name: Debug Error
       if: steps.compile.outcome == 'failure' || steps.generate.outcome == 'failure'
@@ -145,12 +147,12 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-          echo "release_tag=$(date +"%Y-%m-%d")" >> $GITHUB_OUTPUT
-          echo "release_date=$(date +"%Y-%m-%d")" >> $GITHUB_OUTPUT
-          touch release.txt
-          echo "Default IP: 10.0.0.1" >> release.txt
-          echo "status=success" >> $GITHUB_OUTPUT
-          
+        echo "release_tag=$(date +"%Y-%m-%d")" >> $GITHUB_OUTPUT
+        echo "release_date=$(date +"%Y-%m-%d")" >> $GITHUB_OUTPUT
+        touch release.txt
+        echo "Default IP: 10.0.0.1" >> release.txt
+        echo "status=success" >> $GITHUB_OUTPUT
+
     - name: Upload firmware to release
       uses: softprops/action-gh-release@v1
       if: steps.tag.outputs.status == 'success' && !cancelled()
