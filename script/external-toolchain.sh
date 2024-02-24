@@ -30,5 +30,6 @@ dl_toolchain() {
 }
 
 config_path="$GITHUB_WORKSPACE/config/device/$DEVICE.config.seed"
-TARGET_NAME=$(grep -o 'TARGET_NAME=[^ ]*' $config_path | awk -F= '{print $2}')
-dl_toolchain $TARGET_NAME
+Architecture=$(grep -o 'TARGET_[[:alnum:]]*=y' $config_path | awk -F'[_=]' '{print $2}')
+Subtarget=$(grep -o "${Architecture}_[[:alnum:]]*=y" $config_path | awk -F'[_=]' '{print $2}')
+dl_toolchain "$Architecture/$Subtarget"
