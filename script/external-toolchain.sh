@@ -32,4 +32,9 @@ dl_toolchain() {
 config_path="$GITHUB_WORKSPACE/config/device/$DEVICE.config.seed"
 Architecture=$(grep -o 'TARGET_[[:alnum:]]*=y' $config_path | awk -F'[_=]' '{print $2}')
 Subtarget=$(grep -o "${Architecture}_[[:alnum:]]*=y" $config_path | awk -F'[_=]' '{print $2}')
+  
 dl_toolchain "$Architecture/$Subtarget"
+
+# Prepared for simplifying images name.
+[[ $Architecture == *"x86"* ]] && TARGET_NAME='' || TARGET_NAME=-$Architecture-$Subtarget
+echo "TARGET_NAME=$TARGET_NAME" >> $GITHUB_ENV
