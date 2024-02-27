@@ -3,6 +3,7 @@
 
 ## 20240227
 * firewall4: fix flow offload.
+* luci-app-turboacc✔
 
 ---
 

@@ -94,5 +94,8 @@ clone_and_extract https://github.com/immortalwrt/luci applications/luci-app-argo
 # Return to "openwrt" directory.
 cd $OPENWRTROOT
 
+# Add turboacc package
+curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
+
 # Execute all patch & preset shell files in the script directory.
 find $GITHUB_WORKSPACE/script/ \( -name "patch-*.sh" -o -name "preset-*.sh" \) -exec {} \;

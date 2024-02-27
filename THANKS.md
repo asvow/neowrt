@@ -19,3 +19,4 @@
 - [luci-app-dockerman](https://github.com/lisaac/luci-app-dockerman)
 - [luci-app-mosdns](https://github.com/sbwml/luci-app-mosdns)
 - [luci-app-openclash](https://github.com/vernesong/OpenClash)
+- [turboacc](https://github.com/chenmozhijin/turboacc)
