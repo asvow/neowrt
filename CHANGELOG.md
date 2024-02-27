@@ -1,6 +1,11 @@
 # Changelog
 ###### (auto syncing with the upstream repository)
 
+## 20240228
+* Fix PPPoE reconnection probabilistic network disconnection issue.
+
+---
+
 ## 20240227
 * firewall4: fix flow offload.
 * luci-app-turboacc✔
