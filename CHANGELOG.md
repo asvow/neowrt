@@ -1,6 +1,11 @@
 # Changelog
 ###### (auto syncing with the upstream repository)
 
+## 20240227
+* firewall4: fix flow offload.
+
+---
+
 ## 20240223
 * Compile using the official OpenWrt External Toolchain.
 * Add support for x86-64.

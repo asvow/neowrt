@@ -32,7 +32,7 @@ sed -i 's/list blocked_interfaces '\''wan'\''/#&/' $OPENWRTROOT/feeds/packages/u
 # luci-app-dockerman: hide config buttons in overview page
 if [ "$BRANCH" == "v23.05.2" ]; then
   patch_url="https://github.com/openwrt/luci/commit/568b44edb3bf545e424e7c1a3f162e753b190113.patch"
-  
+
   pushd $OPENWRTROOT/feeds/luci
     wget $patch_url
     git apply $(basename $patch_url)
@@ -46,3 +46,11 @@ mv $GITHUB_WORKSPACE/patch/cgroupfs/cgroupfs-mount.init $OPENWRTROOT/feeds/packa
 # cgroupfs v2
 mkdir -p $OPENWRTROOT/feeds/packages/utils/cgroupfs-mount/patches
 cp $GITHUB_WORKSPACE/patch/cgroupfs/900-add-cgroupfs2.patch $OPENWRTROOT/feeds/packages/utils/cgroupfs-mount/patches/900-add-cgroupfs2.patch
+
+# firewall4: fix flow offload
+if [ "$BRANCH" == "v23.05.2" ]; then
+  pushd $OPENWRTROOT/package/network/config/firewall4
+    mkdir patches
+    cp $GITHUB_WORKSPACE/patch/firewall4/001-fix-fw4-flow-offload.patch patches
+  popd
+fi
