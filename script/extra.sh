@@ -49,7 +49,8 @@ fi
 
 # Add luci-app-alist
 if [ ! -d "$OPENWRTROOT/feeds/luci/applications/luci-app-alist" ]; then
-  git clone https://github.com/sbwml/luci-app-alist alist
+  clone_and_extract https://github.com/immortalwrt/packages net/alist
+  clone_and_extract https://github.com/immortalwrt/luci applications/luci-app-alist
 fi
 
 # Add luci-app-cpufreq
