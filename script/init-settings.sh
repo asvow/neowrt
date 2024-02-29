@@ -19,6 +19,8 @@ set luci.main.lang='auto'
 set luci.main.mediaurlbase='/luci-static/argon'
 commit luci
 EOF
+rm -rf /tmp/luci-modulecache
+rm -rf /tmp/luci-indexcache
 
 # Set default network preferences
 uci batch <<EOF
@@ -32,12 +34,21 @@ EOF
 uci batch <<-EOF
 delete dhcp.lan.dhcpv6
 delete dhcp.lan.ra_flags
-set dhcp.lan.dhcpv6="hybrid"
-set dhcp.lan.ra_flags="other-config"
-set dhcp.lan.max_preferred_lifetime="2700"
-set dhcp.lan.max_valid_lifetime="5400"
+set dhcp.lan.dhcpv6='hybrid'
+set dhcp.lan.ndp='hybrid'
+set dhcp.lan.ra='hybrid'
+add_list dhcp.lan.ra_flags='managed-config'
+add_list dhcp.lan.ra_flags='other-config'
+set dhcp.lan.max_preferred_lifetime='2700'
+set dhcp.lan.max_valid_lifetime='5400'
 commit dhcp
 EOF
+/etc/init.d/odhcpd reload
+
+# Disable logging in dnsmasq
+sed -i "/log-facility/d" "/etc/dnsmasq.conf"
+echo "log-facility=/dev/null" >> "/etc/dnsmasq.conf"
+/etc/init.d/dnsmasq reload
 
 # Disable opkg signature check
 # sed -i 's/option check_signature/# option check_signature/g' /etc/opkg.conf
