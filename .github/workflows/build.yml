@@ -131,8 +131,8 @@ jobs:
         for image in "${images[@]}"; do
           imagename=$(echo $(basename $image) | sed "s/openwrt/&-$VERSION/g; s/$TARGET_NAME\|-combined\|-generic\|-sysupgrade//g")
           mv $image $GITHUB_WORKSPACE/release/$imagename
-          md5value=$(md5sum $GITHUB_WORKSPACE/release/$imagename | awk '{ print $1 }')
-          echo "$imagename: $md5value" >> $GITHUB_WORKSPACE/release/$imagename.md5
+          sha256value=$(sha256sum $GITHUB_WORKSPACE/release/$imagename | awk '{ print $1 }')
+          echo "$imagename: $sha256value" >> $GITHUB_WORKSPACE/release/$VERSION-$DEVICE-sha256sum.txt
         done
         echo "FIRMWARE=$GITHUB_WORKSPACE/release" >> $GITHUB_ENV
 
