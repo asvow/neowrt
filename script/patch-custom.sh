@@ -52,3 +52,11 @@ pushd $OPENWRTROOT/package/network/config/firewall4
   mkdir -p patches
   cp $GITHUB_WORKSPACE/patch/firewall4/001-fix-fw4-flow-offload.patch patches
 popd
+
+# tailscale: bomp version to 1.60.1.
+sed -i "/PKG_VERSION:=/c\PKG_VERSION:=1.60.1" $OPENWRTROOT/feeds/packages/net/tailscale/Makefile
+sed -i "/PKG_HASH:=/c\PKG_HASH:=9766336845cef4d8b906145bc863f20ec8b9af71051471de45d7f964539a9817" $OPENWRTROOT/feeds/packages/net/tailscale/Makefile
+
+# golang: bomp version to latest. 
+rm -rf $OPENWRTROOT/feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 22.x $OPENWRTROOT/feeds/packages/lang/golang
