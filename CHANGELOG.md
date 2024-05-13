@@ -1,6 +1,11 @@
 # Changelog
 ###### (auto syncing with the upstream repository)
 
+## 20240513
+* ~~luci-app-daed~~
+
+---
+
 ## 20240301
 * tailscale: bomp version to 1.60.1.
 * golang: bomp version to latest.

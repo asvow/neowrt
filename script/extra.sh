@@ -38,15 +38,6 @@ git clone --recurse https://github.com/asvow/neo-addon
 # Add coremark
 clone_and_extract https://github.com/coolsnowwolf/packages utils/coremark
 
-# Add dae
-if [ ! -d "$OPENWRTROOT/feeds/packages/net/daed" ]; then
-  clone_and_extract https://github.com/immortalwrt/packages net/daed
-  sed -i 's/@IMMORTALWRT/https:\/\/sources-cdn.immortalwrt.org/g' daed/Makefile
-fi
-if [ ! -d "$OPENWRTROOT/feeds/luci/applications/luci-app-daed" ]; then
-  clone_and_extract https://github.com/immortalwrt/luci applications/luci-app-daed
-fi
-
 # Add luci-app-alist
 if [ ! -d "$OPENWRTROOT/feeds/luci/applications/luci-app-alist" ]; then
   clone_and_extract https://github.com/immortalwrt/packages net/alist

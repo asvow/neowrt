@@ -40,13 +40,6 @@ if [ "$BRANCH" == "v23.05.2" ]; then
   popd
 fi
 
-# fix unmount hierarchical mount
-mv $GITHUB_WORKSPACE/patch/cgroupfs/cgroupfs-mount.init $OPENWRTROOT/feeds/packages/utils/cgroupfs-mount/files/cgroupfs-mount.init
-
-# cgroupfs v2
-mkdir -p $OPENWRTROOT/feeds/packages/utils/cgroupfs-mount/patches
-cp $GITHUB_WORKSPACE/patch/cgroupfs/900-add-cgroupfs2.patch $OPENWRTROOT/feeds/packages/utils/cgroupfs-mount/patches/900-add-cgroupfs2.patch
-
 # firewall4: fix flow offload
 pushd $OPENWRTROOT/package/network/config/firewall4
   mkdir -p patches
