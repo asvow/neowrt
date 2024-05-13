@@ -26,20 +26,6 @@ sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' $OPENWRTROOT/
 # sed -i "/PKG_VERSION:=/c\PKG_VERSION:=1.10.2" $OPENWRTROOT/feeds/packages/net/netavark/Makefile
 # sed -i "/PKG_HASH:=/c\PKG_HASH:=5df03e3dc82e208dd49684e7b182ffe6c158ad9d9d06cba0c3d4820f471bfaa4" $OPENWRTROOT/feeds/packages/net/netavark/Makefile
 
-# Fix docker bridge network
-sed -i 's/list blocked_interfaces '\''wan'\''/#&/' $OPENWRTROOT/feeds/packages/utils/dockerd/files/etc/config/dockerd
-
-# luci-app-dockerman: hide config buttons in overview page
-if [ "$BRANCH" == "v23.05.2" ]; then
-  patch_url="https://github.com/openwrt/luci/commit/568b44edb3bf545e424e7c1a3f162e753b190113.patch"
-
-  pushd $OPENWRTROOT/feeds/luci
-    wget $patch_url
-    git apply $(basename $patch_url)
-    rm $(basename $patch_url)
-  popd
-fi
-
 # firewall4: fix flow offload
 pushd $OPENWRTROOT/package/network/config/firewall4
   mkdir -p patches
