@@ -2,6 +2,7 @@
 ###### (auto syncing with the upstream repository)
 
 ## 20240513
+* tailscale: bomp version to 1.66.1
 * ~~luci-app-daed~~
 
 ---
