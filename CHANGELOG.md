@@ -1,6 +1,11 @@
 # Changelog
 ###### (auto syncing with the upstream repository)
 
+## 20240604
+* luci-app-hd-idle✔
+
+---
+
 ## 20240514
 * ~~docker~~
 
